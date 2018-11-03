@@ -254,7 +254,6 @@ Stroke.distanceAtAngle = function(this, pattern, angle)
     return d / #strokePoints
 end
 
-local ShapeDetector = {}
 function ShapeDetector.new(patterns, options)
     assert(type(table) == "table", "patterns is not a table")
 
