@@ -2,7 +2,7 @@ package = "shape-detector"
 version = "0.0.1-1"
 source = {
    url = "git://github.com/jupiterio/shape-detector",
-   tag = "0.0.1"
+   tag = "v0.0.1"
 }
 description = {
    summary = "Shape/gesture/stroke detection/recognition algorithm based on the $1 (dollar) recognizer. Ported from https://github.com/MathieuLoutre/shape-detector",
