@@ -46,11 +46,13 @@ local function getDistance(a, b)
 end
 
 local Stroke = {}
-function Stroke.new(points, name)
+function Stroke.new(rotate, points, name)
+    assert(type(rotate) == "boolean", "rotate is not a boolean")
     assert(type(points) == "table", "points is not a table")
 
     local this = {}
 
+    this.rotate = rotate
     this.points = points
     this.name = name
     Stroke.processStroke(this)
@@ -62,7 +64,7 @@ Stroke.processStroke = function(this)
 
     this.points = Stroke.resample(this)
     Stroke.setCentroid(this)
-    this.points = Stroke.rotateBy(this, -Stroke.indicativeAngle(this))
+    if this.rotate then this.points = Stroke.rotateBy(this, -Stroke.indicativeAngle(this)) end
     this.points = Stroke.scaleToSquare(this)
     Stroke.setCentroid(this)
     this.points = Stroke.translateToOrigin(this)
@@ -260,6 +262,7 @@ function ShapeDetector.new(patterns, options)
     local this = {}
 
     options = options or {}
+    this.rotatable = type(options.rotatable) == "nil" and true or options.rotatable
     this.threshold = options.threshold or 0.9
     _nbSamplePoints = options.nbSamplePoints or 64
 
@@ -369,7 +372,7 @@ ShapeDetector.spot = function(this, points, patternName)
     if not patternName then patternName = "" end
 
     local distance, pattern, score
-    local stroke = Stroke.new(points)
+    local stroke = Stroke.new(this.rotatable, points)
     local bestDistance = math.huge
     local bestPattern = nil
     local bestScore = 0
@@ -396,7 +399,9 @@ ShapeDetector.learn = function(this, name, points)
     assert(type(name) == "string", "name is not a string")
     assert(type(points) == "table", "points is not a table")
 
-    return table.insert(this.patterns, Stroke.new(points, name))
+    return table.insert(this.patterns, Stroke.new(this.rotatable, points, name))
 end
+
+ShapeDetector.Stroke = Stroke
 
 return ShapeDetector

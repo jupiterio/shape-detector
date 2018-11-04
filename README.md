@@ -2,7 +2,7 @@
 
 > Shape/gesture/stroke detection/recognition algorithm based on the $1 (dollar) recognizer
 
-This is a quick, dirty and direct port of [this gesture shape recognition library by MatthieuLoutre](https://github.com/MathieuLoutre/shape-detector) to Lua. Plays nicely with LÖVE. *Should* work exactly as the original. If not, please do tell me.
+This is a quick and dirty port of [this gesture shape recognition library by MatthieuLoutre](https://github.com/MathieuLoutre/shape-detector) to Lua, with some little tweaks. Plays nicely with LÖVE. *Should* work like the original. If not, please do tell me.
 
 ## Usage
 
@@ -32,5 +32,6 @@ This is a quick, dirty and direct port of [this gesture shape recognition librar
 	-- ShapeDetector can also take options
 	-- nbSamplePoints (integer) is 64 by default. Increasing it potentially improves accuracy
 	-- threshold (0.0-1.0) is 0.9 by default. High numbers are less forgiving to wonky shapes
-	detector = ShapeDetector.new(ShapeDetector.defaultShapes, { nbSamplePoints = 128, threshold = 0.8 })
+	-- rotatable is true by default. Allows you to detect a shape regardless of its rotation.
+	detector = ShapeDetector.new(ShapeDetector.defaultShapes, { nbSamplePoints = 128, threshold = 0.8, rotatable = true })
 ```
